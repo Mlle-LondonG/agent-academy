@@ -67,7 +67,7 @@
     --s-2:  8px;
     --s-3:  12px;
     --s-4:  16px;
-    --s-5:  24px;   /* Salto grande aquí — fuerza ritmos limpios */
+    --s-5:  24px;
     --s-6:  32px;
     --s-7:  48px;
     --s-8:  64px;
@@ -82,9 +82,9 @@
     --r-pill: 9999px;
   
     /* ─── Layout ─── */
-    --content-max: 1126px;
-    --reading-max: 680px;       /* Para prose: ~70 caracteres por línea */
-    --gutter: clamp(20px, 4vw, 56px);
+    --content-max: 1440px;      /* Subido: ahora es el cap del CONTENIDO interno, no del shell */
+    --reading-max: 680px;        /* Para prose: ~70 caracteres */
+    --gutter: clamp(16px, 3vw, 48px);   /* Padding lateral fluido */
   
     /* ─── Motion ─── */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -101,10 +101,8 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Activa ligaduras y características OpenType — diferencia sutil pero pro */
     font-feature-settings: 'cv11', 'ss01', 'ss03', 'kern';
     font-variant-ligatures: common-ligatures contextual;
-    /* Tabular numerals globales en datos, ver clase .num */
   }
   
   /* ─── Dark theme ─── */
@@ -162,16 +160,15 @@
   }
   
   * {
-    /* Margins consistentes — `body` los cierra igual */
     margin: 0;
   }
   
   html {
     -webkit-text-size-adjust: 100%;
-    /* Scroll suave global, pero respeta usuarios que prefieren reducir motion */
     scroll-behavior: smooth;
-    /* Compensación para anchors con headers fijos, si aplica */
     scroll-padding-top: var(--s-5);
+    /* Refuerzo: el documento ocupa todo el ancho disponible */
+    width: 100%;
   }
   
   @media (prefers-reduced-motion: reduce) {
@@ -184,9 +181,13 @@
   
   body {
     font: var(--fs-body)/var(--lh-normal) var(--sans);
-    letter-spacing: -0.005em;     /* Tracking sutil negativo en body — más limpio */
+    letter-spacing: -0.005em;
+    /* Full width real, sin restricciones */
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    /* Cinturón de seguridad anti-overflow horizontal */
     overflow-x: hidden;
-    /* Mejor renderizado de fuentes en macOS y Windows */
     text-rendering: optimizeLegibility;
   }
   
@@ -218,7 +219,7 @@
     background-clip: padding-box !important;
   }
   
-  /* Media siempre fluida */
+  /* Media siempre fluida — ningún medio rompe el layout */
   img, svg, video, canvas, iframe, picture {
     max-width: 100%;
     height: auto;
@@ -235,33 +236,74 @@
   }
   
   /* ============================================================
-     ROOT CONTAINER
+     SHELL · El chasis de la app · FULL WIDTH
+     ────────────────────────────────────────────────────────────
+     #root ahora es el shell de la aplicación: ocupa 100% del
+     viewport, sin max-width, sin centrado, sin bordes laterales.
+     Es el lienzo sobre el que viven dashboards, navbars edge-to-
+     edge, hero sections con fondos sangrantes, etc.
      ============================================================ */
   #root {
     width: 100%;
-    max-width: var(--content-max);
-    margin-inline: auto;
-    padding-inline: var(--gutter);
-    padding-block: var(--s-7) var(--s-8);  /* Top más cerca, bottom más aire */
-    text-align: center;
-    border-inline: 1px solid var(--border-soft);
     min-height: 100vh;
     min-height: 100svh;
     display: flex;
     flex-direction: column;
-    gap: var(--s-5);                       /* Ritmo vertical consistente */
+    /* Sin max-width, sin margin-inline auto, sin border-inline,
+       sin text-align center, sin padding lateral fijo.
+       El padding y el ancho de cada bloque se gestionan dentro. */
+  }
+  
+  /* ============================================================
+     CONTAINER · Wrappers para zonas que SÍ necesitan ancho legible
+     ────────────────────────────────────────────────────────────
+     Aplica .container a la pieza interna que quieras restringir:
+     un artículo, un panel de settings, un hero alineado al grid.
+     El shell sigue siendo full-width; solo el contenido respira.
+     ============================================================ */
+  .container,
+  .section__inner {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  
+  /* Variante para prose larga (blog post, documentación) */
+  .container--reading {
+    max-width: calc(var(--reading-max) + var(--gutter) * 2);
+  }
+  
+  /* Variante full-bleed (sin restricción, solo padding) */
+  .container--bleed {
+    max-width: none;
+    padding-inline: var(--gutter);
+  }
+  
+  /* ============================================================
+     SECTION · Bloques verticales del shell
+     ────────────────────────────────────────────────────────────
+     Cualquier <section> hijo directo del shell ocupa el ancho
+     completo y aplica padding vertical consistente. El contenido
+     interno se restringe con .container si hace falta.
+     ============================================================ */
+  .section {
+    width: 100%;
+    padding-block: var(--s-7);
   }
   
   @media (max-width: 600px) {
-    #root {
-      border-inline: 0;
-      padding-block: var(--s-5) var(--s-6);
-      gap: var(--s-4);
-    }
+    .section { padding-block: var(--s-6); }
   }
   
   /* ============================================================
      TYPOGRAPHY · Sistema completo
+     ────────────────────────────────────────────────────────────
+     ⚠ Cambio importante: las restricciones de ancho y los
+     margin-inline: auto se MOVIERON de los elementos base a
+     utilidades opcionales (.prose, .narrow). Por defecto, los
+     headings y párrafos NO se centran ni se limitan — para que
+     el layout pueda ser de app, no de blog.
      ============================================================ */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--heading);
@@ -269,54 +311,48 @@
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: var(--lh-snug);
-    /* Evita huérfanos en headings — un detalle de revista */
     text-wrap: balance;
   }
   
   h1 {
     font-size: var(--fs-h1);
-    font-weight: 600;
     line-height: var(--lh-tight);
-    letter-spacing: -0.035em;            /* Más cerrado en tamaños grandes */
+    letter-spacing: -0.035em;
     margin-block: clamp(24px, 3vw, 40px) clamp(12px, 1.5vw, 20px);
-    max-width: 18ch;                      /* Headlines no leen bien si son muy largos */
-    margin-inline: auto;
+    /* Sin max-width ni margin-inline auto por defecto:
+       en una landing centrada lo aplicas con .narrow */
   }
   
   h2 {
     font-size: var(--fs-h2);
     letter-spacing: -0.022em;
-    line-height: var(--lh-snug);
     margin-block: 0 var(--s-2);
   }
   
   h3 {
     font-size: var(--fs-h3);
     letter-spacing: -0.015em;
-    line-height: var(--lh-snug);
     margin-block: 0 var(--s-2);
   }
   
   p {
     line-height: var(--lh-relaxed);
-    /* Evita líneas viudas — última línea no queda con 1-2 palabras solas */
     text-wrap: pretty;
-    max-width: var(--reading-max);
-    margin-inline: auto;
+    /* Sin max-width ni margin-inline auto por defecto.
+       Para prose, envuelve en .prose (ver abajo). */
   }
   
-  /* Lede / subtitle — el párrafo grande bajo un h1 */
+  /* Lede / subtitle */
   .lede,
   p.lede {
     font-size: var(--fs-lead);
     line-height: var(--lh-relaxed);
     color: var(--text-soft);
     letter-spacing: -0.005em;
-    max-width: 56ch;
-    margin-inline: auto;
+    /* Sin max-width forzado: lo decide el contenedor */
   }
   
-  /* Eyebrow — etiqueta sobre títulos */
+  /* Eyebrow */
   .eyebrow {
     display: inline-flex;
     align-items: center;
@@ -324,21 +360,21 @@
     font-size: var(--fs-caption);
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.08em;        /* Tracking POSITIVO en uppercase pequeño */
+    letter-spacing: 0.08em;
     color: var(--accent-text);
     margin-bottom: var(--s-3);
   }
   
-  /* Caption / fineprint */
+  /* Caption */
   .caption,
   small {
     font-size: var(--fs-small);
     color: var(--text-soft);
     line-height: var(--lh-normal);
-    letter-spacing: 0.005em;        /* Tracking positivo en texto chico mejora legibilidad */
+    letter-spacing: 0.005em;
   }
   
-  /* Numerales tabulares para datos, contadores, tablas */
+  /* Numerales tabulares */
   .num,
   .counter,
   time,
@@ -347,7 +383,7 @@
     font-feature-settings: 'tnum';
   }
   
-  /* Enlaces — sutiles pero claros */
+  /* Enlaces */
   a {
     color: var(--accent-text);
     text-decoration: none;
@@ -361,11 +397,38 @@
     color: var(--accent-hover);
   }
   
-  /* Strong jerárquico — un tono más oscuro, no solo bold */
   strong, b {
     font-weight: 600;
     color: var(--text-h);
   }
+  
+  /* ============================================================
+     PROSE & NARROW · Utilidades para zonas de lectura
+     ────────────────────────────────────────────────────────────
+     Cuando SÍ quieras la experiencia de blog (artículo de docs,
+     página legal, post), envuelve el contenido en .prose. Solo
+     ahí los párrafos se restringen y centran.
+     ============================================================ */
+  .prose {
+    max-width: var(--reading-max);
+    margin-inline: auto;
+  }
+  
+  .prose p,
+  .prose ul,
+  .prose ol,
+  .prose blockquote {
+    max-width: var(--reading-max);
+  }
+  
+  .prose > * + * {
+    margin-top: var(--s-4);
+  }
+  
+  /* Versión minimal: solo limita el ancho, sin estilos extra */
+  .narrow { max-width: 56ch; }
+  .narrow--center { max-width: 56ch; margin-inline: auto; }
+  .center-text  { text-align: center; }
   
   /* ============================================================
      CODE · Inline + bloques
@@ -380,16 +443,14 @@
     color: var(--text-h);
     max-width: 100%;
     overflow-wrap: anywhere;
-    /* Code en mono no necesita ligaduras de Inter — desactivamos */
     font-feature-settings: 'liga' 0, 'calt' 1;
   }
   
   code {
-    padding: 0.15em 0.45em;        /* Padding relativo al font-size — escala bien */
+    padding: 0.15em 0.45em;
     background: var(--code-bg);
     border: 1px solid var(--border-soft);
     line-height: var(--lh-snug);
-    /* Evita que se infle dentro de párrafos */
     vertical-align: baseline;
   }
   
@@ -402,7 +463,6 @@
     font-size: var(--fs-code);
     line-height: var(--lh-relaxed);
     text-align: left;
-    /* Scrollbar más sutil dentro de pre */
   }
   pre code {
     padding: 0;
@@ -412,7 +472,7 @@
   }
   
   /* ============================================================
-     HORIZONTAL RULE refinado
+     HORIZONTAL RULE
      ============================================================ */
   hr {
     border: 0;
