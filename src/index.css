@@ -1,111 +1,422 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
+/* ============================================================
+   DESIGN TOKENS · The single source of truth
+   ============================================================ */
+   :root {
+    /* ─── Color · Light theme ─── */
+    --bg: #ffffff;
+    --surface: #fafaf9;        /* Cards, secciones elevadas */
+    --surface-2: #f4f3ec;      /* Code, inputs, áreas hundidas */
+    --hover: rgba(0, 0, 0, 0.03);
+  
+    --text: #6b6375;           /* Body */
+    --text-h: #08060d;          /* Headings */
+    --text-soft: #8b8593;       /* Secondary, captions */
+    --text-mute: #b5b1bb;       /* Tertiary, placeholders */
+  
+    --border: #ebeae8;          /* Divisores principales */
+    --border-soft: #f1f0ee;     /* Divisores muy sutiles */
+    --border-strong: #d4d2d8;   /* Bordes de inputs, énfasis */
+  
+    --code-bg: #f4f3ec;
+  
+    --accent: #aa3bff;
+    --accent-hover: #b554ff;
+    --accent-bg: rgba(170, 59, 255, 0.08);
+    --accent-bg-strong: rgba(170, 59, 255, 0.14);
+    --accent-border: rgba(170, 59, 255, 0.45);
+    --accent-text: #8a1fd6;     /* Mejor contraste sobre bg claro */
+  
+    --social-bg: rgba(244, 243, 236, 0.5);
+  
+    /* Sombras en capas — la diferencia entre flat y pulido */
+    --shadow-xs: 0 1px 2px rgba(15, 15, 25, 0.04);
+    --shadow-sm: 0 1px 2px rgba(15, 15, 25, 0.04),
+                 0 2px 4px rgba(15, 15, 25, 0.04);
+    --shadow-md: 0 4px 8px -2px rgba(15, 15, 25, 0.06),
+                 0 2px 4px -1px rgba(15, 15, 25, 0.04);
+    --shadow-lg: 0 12px 24px -8px rgba(15, 15, 25, 0.10),
+                 0 4px 8px -2px rgba(15, 15, 25, 0.06);
+    --shadow: var(--shadow-md);  /* Backwards compat */
+  
+    --ring: 0 0 0 3px var(--accent-bg-strong);
+  
+    /* ─── Tipografía ─── */
+    --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+            'Helvetica Neue', Arial, sans-serif;
+    --heading: var(--sans);
+    --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+  
+    /* Escala fluida — clamp(min, preferred, max) */
+    --fs-caption: clamp(11px, 0.6875rem + 0.05vw, 12px);
+    --fs-small:   clamp(13px, 0.8125rem + 0.1vw,  14px);
+    --fs-body:    clamp(15px, 0.9375rem + 0.2vw, 17px);
+    --fs-lead:    clamp(17px, 1.0625rem + 0.3vw, 20px);
+    --fs-h3:      clamp(18px, 1.125rem + 0.4vw,  22px);
+    --fs-h2:      clamp(22px, 1.375rem + 0.6vw,  28px);
+    --fs-h1:      clamp(34px, 1.875rem + 3vw,    56px);
+    --fs-display: clamp(44px, 2.5rem + 4vw,      72px);
+    --fs-code:    clamp(13px, 0.8125rem + 0.15vw, 15px);
+  
+    --lh-tight:   1.1;
+    --lh-snug:    1.25;
+    --lh-normal:  1.5;
+    --lh-relaxed: 1.65;
+  
+    /* ─── Spacing · Escala 4px ─── */
+    --s-1:  4px;
+    --s-2:  8px;
+    --s-3:  12px;
+    --s-4:  16px;
+    --s-5:  24px;   /* Salto grande aquí — fuerza ritmos limpios */
+    --s-6:  32px;
+    --s-7:  48px;
+    --s-8:  64px;
+    --s-9:  96px;
+    --s-10: 128px;
+  
+    /* ─── Radius ─── */
+    --r-sm: 4px;
+    --r-md: 8px;
+    --r-lg: 12px;
+    --r-xl: 16px;
+    --r-pill: 9999px;
+  
+    /* ─── Layout ─── */
+    --content-max: 1126px;
+    --reading-max: 680px;       /* Para prose: ~70 caracteres por línea */
+    --gutter: clamp(20px, 4vw, 56px);
+  
+    /* ─── Motion ─── */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --t-fast: 120ms var(--ease-out);
+    --t-base: 200ms var(--ease-out);
+    --t-slow: 320ms var(--ease-out);
+  
+    /* ─── Aplicación al root ─── */
+    color-scheme: light dark;
+    color: var(--text);
+    background: var(--bg);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Activa ligaduras y características OpenType — diferencia sutil pero pro */
+    font-feature-settings: 'cv11', 'ss01', 'ss03', 'kern';
+    font-variant-ligatures: common-ligatures contextual;
+    /* Tabular numerals globales en datos, ver clase .num */
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  
+  /* ─── Dark theme ─── */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e0f14;
+      --surface: #16171d;
+      --surface-2: #1f2028;
+      --hover: rgba(255, 255, 255, 0.04);
+  
+      --text: #9ca3af;
+      --text-h: #f3f4f6;
+      --text-soft: #7e8390;
+      --text-mute: #5d626d;
+  
+      --border: #2a2c36;
+      --border-soft: #1f2028;
+      --border-strong: #3a3d4a;
+  
+      --code-bg: #1f2028;
+  
+      --accent: #c084fc;
+      --accent-hover: #d4a4ff;
+      --accent-bg: rgba(192, 132, 252, 0.10);
+      --accent-bg-strong: rgba(192, 132, 252, 0.20);
+      --accent-border: rgba(192, 132, 252, 0.45);
+      --accent-text: #d4a4ff;
+  
+      --social-bg: rgba(47, 48, 58, 0.5);
+  
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4),
+                   0 2px 4px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.5),
+                   0 2px 4px -1px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 12px 24px -8px rgba(0, 0, 0, 0.6),
+                   0 4px 8px -2px rgba(0, 0, 0, 0.5);
+      --shadow: var(--shadow-md);
+  
+      --ring: 0 0 0 3px var(--accent-bg-strong);
+    }
+  
+    #social .button-icon {
+      filter: invert(1) brightness(2);
+    }
   }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  
+  /* ============================================================
+     RESET · Calibrado, no nuclear
+     ============================================================ */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  
+  * {
+    /* Margins consistentes — `body` los cierra igual */
+    margin: 0;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+  
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* Scroll suave global, pero respeta usuarios que prefieren reducir motion */
+    scroll-behavior: smooth;
+    /* Compensación para anchors con headers fijos, si aplica */
+    scroll-padding-top: var(--s-5);
   }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
+  
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
+  body {
+    font: var(--fs-body)/var(--lh-normal) var(--sans);
+    letter-spacing: -0.005em;     /* Tracking sutil negativo en body — más limpio */
+    overflow-x: hidden;
+    /* Mejor renderizado de fuentes en macOS y Windows */
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Selección con color de marca */
+  ::selection {
+    background: var(--accent-bg-strong);
+    color: var(--text-h);
+  }
+  
+  /* Scrollbar refinada (WebKit) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: 3px solid transparent;
+    border-radius: var(--r-pill);
+    background-clip: padding-box;
+  }
+  :hover::-webkit-scrollbar-thumb,
+  *:hover > ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-mute) !important;
+    background-clip: padding-box !important;
+  }
+  
+  /* Media siempre fluida */
+  img, svg, video, canvas, iframe, picture {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Focus accesible y bonito */
+  :focus { outline: none; }
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+    border-radius: var(--r-sm);
+    transition: box-shadow var(--t-fast);
+  }
+  
+  /* ============================================================
+     ROOT CONTAINER
+     ============================================================ */
+  #root {
+    width: 100%;
+    max-width: var(--content-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    padding-block: var(--s-7) var(--s-8);  /* Top más cerca, bottom más aire */
+    text-align: center;
+    border-inline: 1px solid var(--border-soft);
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);                       /* Ritmo vertical consistente */
+  }
+  
+  @media (max-width: 600px) {
+    #root {
+      border-inline: 0;
+      padding-block: var(--s-5) var(--s-6);
+      gap: var(--s-4);
+    }
+  }
+  
+  /* ============================================================
+     TYPOGRAPHY · Sistema completo
+     ============================================================ */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading);
+    color: var(--text-h);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: var(--lh-snug);
+    /* Evita huérfanos en headings — un detalle de revista */
+    text-wrap: balance;
+  }
+  
+  h1 {
+    font-size: var(--fs-h1);
+    font-weight: 600;
+    line-height: var(--lh-tight);
+    letter-spacing: -0.035em;            /* Más cerrado en tamaños grandes */
+    margin-block: clamp(24px, 3vw, 40px) clamp(12px, 1.5vw, 20px);
+    max-width: 18ch;                      /* Headlines no leen bien si son muy largos */
+    margin-inline: auto;
+  }
+  
+  h2 {
+    font-size: var(--fs-h2);
+    letter-spacing: -0.022em;
+    line-height: var(--lh-snug);
+    margin-block: 0 var(--s-2);
+  }
+  
+  h3 {
+    font-size: var(--fs-h3);
+    letter-spacing: -0.015em;
+    line-height: var(--lh-snug);
+    margin-block: 0 var(--s-2);
+  }
+  
+  p {
+    line-height: var(--lh-relaxed);
+    /* Evita líneas viudas — última línea no queda con 1-2 palabras solas */
+    text-wrap: pretty;
+    max-width: var(--reading-max);
+    margin-inline: auto;
+  }
+  
+  /* Lede / subtitle — el párrafo grande bajo un h1 */
+  .lede,
+  p.lede {
+    font-size: var(--fs-lead);
+    line-height: var(--lh-relaxed);
+    color: var(--text-soft);
+    letter-spacing: -0.005em;
+    max-width: 56ch;
+    margin-inline: auto;
+  }
+  
+  /* Eyebrow — etiqueta sobre títulos */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    font-size: var(--fs-caption);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;        /* Tracking POSITIVO en uppercase pequeño */
+    color: var(--accent-text);
+    margin-bottom: var(--s-3);
+  }
+  
+  /* Caption / fineprint */
+  .caption,
+  small {
+    font-size: var(--fs-small);
+    color: var(--text-soft);
+    line-height: var(--lh-normal);
+    letter-spacing: 0.005em;        /* Tracking positivo en texto chico mejora legibilidad */
+  }
+  
+  /* Numerales tabulares para datos, contadores, tablas */
+  .num,
+  .counter,
+  time,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+  
+  /* Enlaces — sutiles pero claros */
+  a {
+    color: var(--accent-text);
+    text-decoration: none;
+    text-underline-offset: 0.18em;
+    text-decoration-thickness: 0.08em;
+    border-radius: 2px;
+    transition: color var(--t-fast);
+  }
+  a:hover {
+    text-decoration: underline;
+    color: var(--accent-hover);
+  }
+  
+  /* Strong jerárquico — un tono más oscuro, no solo bold */
+  strong, b {
+    font-weight: 600;
+    color: var(--text-h);
+  }
+  
+  /* ============================================================
+     CODE · Inline + bloques
+     ============================================================ */
+  code,
+  .counter {
+    font-family: var(--mono);
+    font-size: var(--fs-code);
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--r-sm);
+    color: var(--text-h);
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    /* Code en mono no necesita ligaduras de Inter — desactivamos */
+    font-feature-settings: 'liga' 0, 'calt' 1;
+  }
+  
+  code {
+    padding: 0.15em 0.45em;        /* Padding relativo al font-size — escala bien */
+    background: var(--code-bg);
+    border: 1px solid var(--border-soft);
+    line-height: var(--lh-snug);
+    /* Evita que se infle dentro de párrafos */
+    vertical-align: baseline;
+  }
+  
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: var(--s-4);
+    overflow-x: auto;
+    font-size: var(--fs-code);
+    line-height: var(--lh-relaxed);
+    text-align: left;
+    /* Scrollbar más sutil dentro de pre */
+  }
+  pre code {
+    padding: 0;
+    background: none;
+    border: 0;
+    font-size: inherit;
+  }
+  
+  /* ============================================================
+     HORIZONTAL RULE refinado
+     ============================================================ */
+  hr {
+    border: 0;
+    height: 1px;
+    background: var(--border-soft);
+    margin-block: var(--s-6);
+  }
