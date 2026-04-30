@@ -11,7 +11,9 @@ import {
   Loader2, Send, KeyRound, Lock, Unlock, AlertOctagon, ListChecks,
   GitBranch, Network, Boxes, Microscope, Ruler, Telescope, Trash2,
   ScrollText, Cog, Gauge, Sigma, Variable, FunctionSquare,
-  Compass, Award, Star, Flame, Sprout, TreeDeciduous, Flower2
+  Compass, Award, Star, Flame, Sprout, TreeDeciduous, Flower2,
+  HelpCircle, ExternalLink, AlertCircle, BookOpenCheck, Github,
+  Library, Share2, ArrowUp
 } from "lucide-react";
 
 /* ============================================================================
@@ -2709,6 +2711,380 @@ const DESIGN_TOKENS = `
     margin-bottom: var(--s-8);
     max-width: 540px;
   }
+
+  /* ============ Module pill on achievement ============ */
+  .achievement__module-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px var(--s-3);
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: var(--fw-bold);
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    margin-bottom: var(--s-6);
+  }
+
+  /* ============ Empty checklist state ============ */
+  .check-empty {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: var(--s-3) var(--s-4);
+    background: var(--bg-elevated);
+    border: 1px dashed var(--border-default);
+    border-radius: var(--r-md);
+    color: var(--text-tertiary);
+    font-size: var(--fs-sm);
+  }
+  .check-empty svg { color: var(--text-tertiary); }
+
+  /* ============ Simulator key validation + error banner ============ */
+  .sim__key-error {
+    font-size: var(--fs-xs);
+    color: var(--danger);
+    line-height: var(--lh-snug);
+  }
+  .sim__error-banner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    border-bottom: none;
+    color: var(--text-h);
+  }
+  .sim__error-banner > svg { color: var(--danger); margin-top: 2px; }
+  .sim__error-title {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    margin-bottom: 2px;
+  }
+  .sim__error-hint {
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+  .sim__error-close {
+    background: transparent;
+    border: 1px solid var(--border-default);
+    color: var(--text-secondary);
+    width: 22px; height: 22px;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sim__error-close:hover { background: var(--bg-elevated); color: var(--text-h); }
+
+  /* ============ API key help popover ============ */
+  .api-help-pop {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 340px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--s-4);
+    z-index: 50;
+    animation: pop-in 160ms ease;
+  }
+  @media (max-width: 480px) {
+    .api-help-pop { width: min(92vw, 340px); right: -100px; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .api-help-pop__head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s-2);
+    margin-bottom: var(--s-2);
+  }
+  .api-help-pop__title {
+    display: flex; align-items: center; gap: var(--s-2);
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--text-h);
+  }
+  .api-help-pop__title svg { color: var(--accent); }
+  .api-help-pop__close {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-tertiary);
+    width: 22px; height: 22px;
+    border-radius: var(--r-sm);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .api-help-pop__close:hover { background: var(--bg-base); color: var(--text-h); }
+  .api-help-pop__lead {
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    margin-bottom: var(--s-3);
+  }
+  .api-help-pop__steps {
+    list-style: none;
+    margin: 0 0 var(--s-3);
+    padding: 0;
+    display: grid;
+    gap: var(--s-2);
+  }
+  .api-help-pop__steps li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-2);
+    align-items: start;
+    font-size: var(--fs-xs);
+    color: var(--text-h);
+    line-height: var(--lh-relaxed);
+  }
+  .api-help-pop__num {
+    width: 18px; height: 18px;
+    border-radius: 999px;
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: var(--fw-bold);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .api-help-pop__steps a { color: var(--accent); text-decoration: underline; }
+  .api-help-pop__warn {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-2);
+    align-items: start;
+    padding: var(--s-2) var(--s-3);
+    background: rgba(251, 191, 36, 0.10);
+    border: 1px solid rgba(251, 191, 36, 0.30);
+    border-radius: var(--r-sm);
+    margin-bottom: var(--s-3);
+  }
+  .api-help-pop__warn > svg { color: rgb(251, 191, 36); margin-top: 2px; }
+  .api-help-pop__warn-title {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--text-h);
+    margin-bottom: 2px;
+  }
+  .api-help-pop__warn-body {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+  }
+  .api-help-pop__cta {
+    width: 100%;
+    height: 34px;
+    font-size: var(--fs-xs);
+    text-decoration: none;
+  }
+
+  /* ============ Achievement: stats grid ============ */
+  .ach-stats__label {
+    font-size: 11px;
+    font-weight: var(--fw-semibold);
+    color: var(--text-tertiary);
+    letter-spacing: 0.12em;
+    margin-bottom: var(--s-3);
+  }
+  .ach-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--s-3);
+    margin-bottom: var(--s-8);
+    width: 100%;
+  }
+  @media (max-width: 720px) { .ach-stats { grid-template-columns: repeat(2, 1fr); } }
+  .ach-stat {
+    display: flex; align-items: center; gap: var(--s-3);
+    padding: var(--s-3) var(--s-4);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-md);
+    text-align: left;
+  }
+  .ach-stat__icon {
+    width: 36px; height: 36px;
+    border-radius: var(--r-sm);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ach-stat--lila .ach-stat__icon {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+  }
+  .ach-stat--cyan .ach-stat__icon {
+    background: var(--cyan-bg);
+    border: 1px solid var(--cyan-border);
+    color: var(--cyan-strong);
+  }
+  .ach-stat--green .ach-stat__icon {
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    color: var(--success);
+  }
+  .ach-stat__value {
+    font-size: var(--fs-base);
+    font-weight: var(--fw-bold);
+    color: var(--text-h);
+    line-height: 1.1;
+  }
+  .ach-stat__label {
+    font-size: var(--fs-xs);
+    color: var(--text-tertiary);
+    line-height: var(--lh-snug);
+    margin-top: 2px;
+  }
+
+  /* ============ Achievement: dual CTAs ============ */
+  .ach-ctas {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--s-3);
+    width: 100%;
+    margin-bottom: var(--s-12);
+  }
+  @media (max-width: 720px) { .ach-ctas { grid-template-columns: 1fr; } }
+  .ach-cta {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-4) var(--s-5);
+    border-radius: var(--r-md);
+    cursor: pointer;
+    text-align: left;
+    transition: all 150ms ease;
+    border: 1px solid var(--border-default);
+    background: var(--bg-elevated);
+    color: var(--text-h);
+  }
+  .ach-cta:hover { transform: translateY(-1px); }
+  .ach-cta--primary {
+    background: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent-deep) 100%);
+    border-color: var(--accent-strong);
+    color: white;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.32);
+  }
+  .ach-cta--primary:hover { box-shadow: 0 12px 32px rgba(99, 102, 241, 0.42); }
+  .ach-cta--secondary:hover { background: var(--bg-surface); border-color: var(--border-default); }
+  .ach-cta__title {
+    font-size: var(--fs-base);
+    font-weight: var(--fw-semibold);
+  }
+  .ach-cta__sub {
+    font-size: var(--fs-xs);
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  /* ============ Achievement: resources ============ */
+  .ach-resources {
+    width: 100%;
+    text-align: left;
+    margin-top: var(--s-4);
+  }
+  .ach-resources__head { text-align: center; margin-bottom: var(--s-8); }
+  .ach-resources__kicker {
+    font-size: 11px;
+    font-weight: var(--fw-semibold);
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    margin-bottom: var(--s-2);
+  }
+  .ach-resources__title {
+    font-size: var(--fs-2xl);
+    font-weight: var(--fw-bold);
+    color: var(--text-h);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--s-2);
+  }
+  .ach-resources__lead {
+    font-size: var(--fs-base);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+  .ach-res-group { margin-bottom: var(--s-6); }
+  .ach-res-group__head {
+    display: flex; align-items: center; gap: var(--s-2);
+    font-size: 11px;
+    font-weight: var(--fw-semibold);
+    color: var(--text-tertiary);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    margin-bottom: var(--s-3);
+    padding-bottom: var(--s-2);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .ach-res-group__head svg { color: var(--accent); }
+  .ach-res-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--s-3);
+  }
+  .ach-res-card {
+    display: flex; flex-direction: column;
+    padding: var(--s-4);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--r-md);
+    text-decoration: none;
+    color: var(--text-h);
+    transition: all 150ms ease;
+    min-height: 124px;
+  }
+  .ach-res-card:hover {
+    border-color: var(--accent-border);
+    background: var(--bg-base);
+    transform: translateY(-1px);
+  }
+  .ach-res-card:hover .ach-res-card__arrow { color: var(--accent); transform: translate(2px, -2px); }
+  .ach-res-card__head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: var(--s-3);
+  }
+  .ach-res-card__icon {
+    width: 30px; height: 30px;
+    border-radius: var(--r-sm);
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ach-res-card__arrow {
+    color: var(--text-tertiary);
+    transition: all 150ms ease;
+  }
+  .ach-res-card__title {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--text-h);
+    margin-bottom: var(--s-1);
+  }
+  .ach-res-card__desc {
+    font-size: var(--fs-xs);
+    color: var(--text-secondary);
+    line-height: var(--lh-relaxed);
+    flex: 1;
+    margin-bottom: var(--s-3);
+  }
+  .ach-res-card__url {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
 
 /* ============================================================================
@@ -3459,24 +3835,42 @@ function Checklist({ items, persistKey }) {
 
   const toggle = (id) => setChecked((p) => ({ ...p, [id]: !p[id] }));
 
+  // Defensive: if items missing or empty, render an explicit empty state
+  // rather than empty boxes (which the user sees as broken UI).
+  if (!Array.isArray(items) || items.length === 0) {
+    return (
+      <div className="check-empty" role="status">
+        <AlertCircle size={14} />
+        <span>No hay elementos en este checklist.</span>
+      </div>
+    );
+  }
+
   return (
     <div className="stack-2">
-      {items.map((it) => (
-        <button
-          key={it.id}
-          className={`check-item ${checked[it.id] ? "check-item--checked" : ""}`}
-          onClick={() => toggle(it.id)}
-          aria-pressed={!!checked[it.id]}
-        >
-          <div className="check-item__box">
-            {checked[it.id] && <Check size={11} strokeWidth={3} />}
-          </div>
-          <div style={{ flex: 1 }}>
-            <div className="check-item__title">{it.title}</div>
-            {it.desc && <div className="check-item__desc">{it.desc}</div>}
-          </div>
-        </button>
-      ))}
+      {items.map((it, i) => {
+        // Accept both shapes: { label } (new modules) and { title, desc } (legacy).
+        const id = it.id ?? `item-${i}`;
+        const title = it.label ?? it.title ?? "";
+        const desc = it.desc;
+        return (
+          <button
+            key={id}
+            type="button"
+            className={`check-item ${checked[id] ? "check-item--checked" : ""}`}
+            onClick={() => toggle(id)}
+            aria-pressed={!!checked[id]}
+          >
+            <div className="check-item__box" aria-hidden="true">
+              {checked[id] && <Check size={11} strokeWidth={3} />}
+            </div>
+            <div style={{ flex: 1, textAlign: "left" }}>
+              <div className="check-item__title">{title}</div>
+              {desc && <div className="check-item__desc">{desc}</div>}
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -3654,6 +4048,61 @@ Cálido, claro, sin tecnicismos. Máximo 1 emoji por respuesta — preferiblemen
 - No recomiendes pesticidas concretos.
 - Si el usuario pide algo fuera del cuidado de plantas, redirige amablemente.`;
 
+// Strict format check: Anthropic keys start with "sk-ant-" followed by base64-ish chars.
+// We accept any "sk-ant-…" of reasonable length so we don't break against minor format changes.
+function isValidApiKeyFormat(key) {
+  if (typeof key !== "string") return false;
+  const k = key.trim();
+  return /^sk-ant-[A-Za-z0-9_\-]{20,}$/.test(k);
+}
+
+// Translate transport / HTTP errors into user-actionable messages.
+function classifyApiError(status, body) {
+  // Network failure (no status)
+  if (status === 0) {
+    return {
+      kind: "network",
+      title: "No se pudo conectar con la API de Claude",
+      hint: "Revisa tu conexión a internet o intenta de nuevo en unos segundos. Si tu navegador bloquea solicitudes a api.anthropic.com (CORS, extensiones, VPN), usa el modo simulación."
+    };
+  }
+  if (status === 401) {
+    return {
+      kind: "auth",
+      title: "API key inválida o expirada (401)",
+      hint: "Verifica que copiaste la clave completa desde console.anthropic.com → API Keys. Si la perdiste, debes crear una nueva: Anthropic solo muestra la clave una vez."
+    };
+  }
+  if (status === 403) {
+    return {
+      kind: "forbidden",
+      title: "Permiso denegado (403)",
+      hint: "Tu clave es válida pero la organización no tiene permiso para usar este modelo. Revisa tu plan en console.anthropic.com."
+    };
+  }
+  if (status === 429) {
+    return {
+      kind: "rate",
+      title: "Límite de uso alcanzado (429)",
+      hint: "Has superado tu cuota o el rate limit. Espera unos minutos o aumenta tu plan."
+    };
+  }
+  if (status >= 500) {
+    return {
+      kind: "server",
+      title: `Error del servidor (${status})`,
+      hint: "La API tuvo un problema interno. Intenta de nuevo en unos segundos."
+    };
+  }
+  // Try to extract a useful message from the response body
+  const apiMsg = body?.error?.message;
+  return {
+    kind: "other",
+    title: `Error ${status}${apiMsg ? ": " + apiMsg : ""}`,
+    hint: "Revisa la consola del navegador para más detalle. Mientras tanto puedes seguir en modo simulación."
+  };
+}
+
 function AgentSimulator() {
   const { t, lang } = useT();
   const [input, setInput] = useState("");
@@ -3663,21 +4112,40 @@ function AgentSimulator() {
   const [apiKey, setApiKey] = usePersistentState(KEYS.API_KEY, "");
   const [apiKeyDraft, setApiKeyDraft] = useState("");
   const [showApiBar, setShowApiBar] = useState(false);
-  const [error, setError] = useState(null);
-  const usedRef = useRef({}); // { topicId: Set(usedIdx) }
+  const [showApiHelp, setShowApiHelp] = useState(false);
+  const [keyError, setKeyError] = useState(null);
+  const [error, setError] = useState(null); // { title, hint }
+  const usedRef = useRef({});
   const bodyRef = useRef(null);
+  const apiHelpRef = useRef(null);
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: 99999, behavior: "smooth" });
   }, [messages, partial]);
 
-  // Reset session when language changes
   useEffect(() => {
     setMessages([]);
     setPartial("");
     setError(null);
     usedRef.current = {};
   }, [lang]);
+
+  // Close popover on outside click / Escape
+  useEffect(() => {
+    if (!showApiHelp) return;
+    function onDoc(e) {
+      if (apiHelpRef.current && !apiHelpRef.current.contains(e.target)) {
+        setShowApiHelp(false);
+      }
+    }
+    function onKey(e) { if (e.key === "Escape") setShowApiHelp(false); }
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [showApiHelp]);
 
   function streamLocal(text, after) {
     setTyping(true);
@@ -3699,40 +4167,76 @@ function AgentSimulator() {
   async function sendReal(userText, history) {
     setTyping(true);
     setError(null);
+    let status = 0;
+    let body = null;
     try {
       const apiMessages = history.concat([{ role: "user", content: userText }]).map((m) => ({
         role: m.role === "bot" ? "assistant" : "user",
         content: m.content,
       }));
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
-        },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-5",
-          max_tokens: 600,
-          system: PLANT_AGENT_SYSTEM_PROMPT,
-          messages: apiMessages,
-        }),
-      });
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
+      let res;
+      try {
+        res = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": apiKey,
+            "anthropic-version": "2023-06-01",
+            "anthropic-dangerous-direct-browser-access": "true",
+          },
+          body: JSON.stringify({
+            model: "claude-sonnet-4-5",
+            max_tokens: 600,
+            system: PLANT_AGENT_SYSTEM_PROMPT,
+            messages: apiMessages,
+          }),
+        });
+      } catch (netErr) {
+        // Pure network failure: DNS, CORS, offline, etc.
+        const cls = classifyApiError(0, null);
+        setTyping(false);
+        setPartial("");
+        setError(cls);
+        setMessages((m) => [...m, { role: "bot", content: `${cls.title}. ${cls.hint}`, error: true }]);
+        return;
       }
-      const data = await res.json();
-      const text = (data.content || []).filter((b) => b.type === "text").map((b) => b.text).join("\n").trim();
-      if (!text) throw new Error("Empty response");
+
+      status = res.status;
+      try { body = await res.json(); } catch { body = null; }
+
+      if (!res.ok) {
+        const cls = classifyApiError(status, body);
+        setTyping(false);
+        setPartial("");
+        setError(cls);
+        setMessages((m) => [...m, { role: "bot", content: `${cls.title}. ${cls.hint}`, error: true }]);
+        return;
+      }
+
+      const text = (body?.content || [])
+        .filter((b) => b.type === "text")
+        .map((b) => b.text)
+        .join("\n")
+        .trim();
+
+      if (!text) {
+        const cls = { title: "Respuesta vacía de la API", hint: "El modelo respondió pero sin contenido textual. Intenta de nuevo." };
+        setTyping(false);
+        setPartial("");
+        setError(cls);
+        setMessages((m) => [...m, { role: "bot", content: `${cls.title}. ${cls.hint}`, error: true }]);
+        return;
+      }
+
       streamLocal(text, () => {
         setMessages((m) => [...m, { role: "bot", content: text }]);
       });
     } catch (e) {
+      const cls = classifyApiError(status || 0, body);
       setTyping(false);
       setPartial("");
-      setError(t.sim.apiError);
-      setMessages((m) => [...m, { role: "bot", content: t.sim.apiError, error: true }]);
+      setError(cls);
+      setMessages((m) => [...m, { role: "bot", content: `${cls.title}. ${cls.hint}`, error: true }]);
     }
   }
 
@@ -3743,16 +4247,13 @@ function AgentSimulator() {
       reply = pickFallback(lang, history);
     } else {
       const top = scores[0].id;
-      // If top score is very low and we already have history, inject a small follow-up frame.
       const picked = pickResponse(top, lang, history, usedRef.current);
       if (!picked) {
         reply = pickFallback(lang, history);
       } else {
-        // Mark the response as used.
         if (!usedRef.current[top]) usedRef.current[top] = new Set();
         usedRef.current[top].add(picked.idxUsed);
         reply = picked.text;
-        // If we're 3+ turns in and topic is repeated, add a continuity intro.
         const sameTopicTurns = history.filter((m) => m.role === "bot").length;
         if (sameTopicTurns >= 2 && Math.random() > 0.5) {
           const intros = SIM_FOLLOWUP[lang] || SIM_FOLLOWUP.es;
@@ -3772,7 +4273,7 @@ function AgentSimulator() {
     const newHistory = [...messages, userMsg];
     setMessages(newHistory);
     setInput("");
-    if (apiKey && apiKey.startsWith("sk-")) {
+    if (isValidApiKeyFormat(apiKey)) {
       sendReal(text, messages);
     } else {
       sendSim(text, messages);
@@ -3786,25 +4287,63 @@ function AgentSimulator() {
     usedRef.current = {};
   };
 
-  const apiConnected = apiKey && apiKey.startsWith("sk-");
+  function commitApiKey() {
+    const candidate = (apiKeyDraft || "").trim();
+    if (!candidate) {
+      setKeyError("Pega tu API key. Empieza con sk-ant-…");
+      return;
+    }
+    if (!isValidApiKeyFormat(candidate)) {
+      setKeyError("Formato inválido. La clave debe empezar con sk-ant- y tener al menos 28 caracteres.");
+      return;
+    }
+    setApiKey(candidate);
+    setApiKeyDraft("");
+    setKeyError(null);
+    setShowApiBar(false);
+    setError(null);
+  }
+
+  function removeApiKey() {
+    setApiKey("");
+    setApiKeyDraft("");
+    setKeyError(null);
+    setError(null);
+  }
+
+  const apiConnected = isValidApiKeyFormat(apiKey);
 
   return (
     <div className="sim">
       <div className="sim__head">
-        <div className={`sim__status ${apiConnected ? "sim__status--api" : ""}`} />
+        <div className={`sim__status ${apiConnected ? "sim__status--api" : ""}`} aria-hidden="true" />
         <div className="sim__title">{t.sim.title}</div>
         <div className="sim__tag">
           {apiConnected ? <><KeyRound size={11} /> {t.sim.apiConnected}</> : <><Bot size={11} /> {t.sim.apiSimulated}</>}
         </div>
-        <button
-          className="sim__head-btn"
-          onClick={() => setShowApiBar((s) => !s)}
-          aria-expanded={showApiBar}
-          aria-label="API key settings"
-          title="API key"
-        >
-          <Settings size={13} />
-        </button>
+
+        <div ref={apiHelpRef} style={{ position: "relative", display: "inline-flex" }}>
+          <button
+            className="sim__head-btn"
+            onClick={() => { setShowApiBar((s) => !s); setShowApiHelp(false); }}
+            aria-expanded={showApiBar}
+            aria-label="Configurar API key"
+            title="API key"
+          >
+            <Settings size={13} />
+          </button>
+          <button
+            className="sim__head-btn"
+            onClick={() => setShowApiHelp((s) => !s)}
+            aria-expanded={showApiHelp}
+            aria-label="Cómo obtener una API key"
+            title="¿Cómo obtengo mi API key?"
+          >
+            <HelpCircle size={13} />
+          </button>
+          {showApiHelp && <ApiKeyHelpPopover onClose={() => setShowApiHelp(false)} />}
+        </div>
+
         {messages.length > 0 && (
           <button className="sim__head-btn" onClick={reset} aria-label={t.sim.reset} title={t.sim.reset}>
             <Trash2 size={13} />
@@ -3814,18 +4353,25 @@ function AgentSimulator() {
 
       {showApiBar && (
         <div className="sim__api-bar">
-          <input
-            type="password"
-            className="sim__api-input"
-            placeholder={t.sim.apiPlaceholder}
-            value={apiKeyDraft || apiKey}
-            onChange={(e) => setApiKeyDraft(e.target.value)}
-            aria-label="Claude API key"
-          />
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 4 }}>
+            <input
+              type="password"
+              className="sim__api-input"
+              placeholder={apiConnected ? "•••• " + apiKey.slice(-6) : t.sim.apiPlaceholder}
+              value={apiKeyDraft}
+              onChange={(e) => { setApiKeyDraft(e.target.value); setKeyError(null); }}
+              onKeyDown={(e) => e.key === "Enter" && commitApiKey()}
+              aria-label="Claude API key"
+              aria-invalid={!!keyError}
+              autoComplete="off"
+              spellCheck={false}
+            />
+            {keyError && <div className="sim__key-error" role="alert">{keyError}</div>}
+          </div>
           <button
             className="btn btn--primary"
             style={{ height: 30, fontSize: "var(--fs-xs)" }}
-            onClick={() => { setApiKey(apiKeyDraft || apiKey); setApiKeyDraft(""); setShowApiBar(false); }}
+            onClick={commitApiKey}
           >
             <Lock size={12} /> {t.sim.apiSet}
           </button>
@@ -3833,11 +4379,24 @@ function AgentSimulator() {
             <button
               className="btn btn--danger"
               style={{ height: 30, fontSize: "var(--fs-xs)" }}
-              onClick={() => { setApiKey(""); setApiKeyDraft(""); }}
+              onClick={removeApiKey}
             >
               <Unlock size={12} /> {t.sim.apiRemove}
             </button>
           )}
+        </div>
+      )}
+
+      {error && (
+        <div className="sim__error-banner" role="alert">
+          <AlertOctagon size={14} />
+          <div>
+            <div className="sim__error-title">{error.title}</div>
+            <div className="sim__error-hint">{error.hint}</div>
+          </div>
+          <button className="sim__error-close" onClick={() => setError(null)} aria-label="Cerrar">
+            <X size={12} />
+          </button>
         </div>
       )}
 
@@ -3895,6 +4454,102 @@ function AgentSimulator() {
           <Send size={12} /> {t.sim.send}
         </button>
       </div>
+    </div>
+  );
+}
+
+function ApiKeyHelpPopover({ onClose }) {
+  const { lang } = useT();
+  const copy = {
+    es: {
+      title: "Cómo obtener tu API key",
+      lead: "Para usar Claude real necesitas una clave del Console de Anthropic.",
+      steps: [
+        { n: 1, t: "Visita console.anthropic.com", url: "https://console.anthropic.com" },
+        { n: 2, t: "Inicia sesión con tu cuenta de Anthropic" },
+        { n: 3, t: "En el menú lateral, ve a API Keys" },
+        { n: 4, t: "Crea, ve o revoca tus claves desde ahí" }
+      ],
+      warnTitle: "Importante",
+      warn: "Por seguridad, Anthropic solo muestra la clave completa una vez al crearla. Si no la guardaste, tendrás que generar una nueva.",
+      cta: "Abrir Claude Console",
+      close: "Cerrar"
+    },
+    en: {
+      title: "How to get your API key",
+      lead: "To use real Claude you need a key from Anthropic Console.",
+      steps: [
+        { n: 1, t: "Visit console.anthropic.com", url: "https://console.anthropic.com" },
+        { n: 2, t: "Sign in with your Anthropic account" },
+        { n: 3, t: "In the side menu, go to API Keys" },
+        { n: 4, t: "Create, view or revoke your keys there" }
+      ],
+      warnTitle: "Important",
+      warn: "For security, Anthropic only shows the full key once at creation. If you didn't save it, you'll have to generate a new one.",
+      cta: "Open Claude Console",
+      close: "Close"
+    },
+    pt: {
+      title: "Como obter sua API key",
+      lead: "Para usar o Claude real você precisa de uma chave do Anthropic Console.",
+      steps: [
+        { n: 1, t: "Visite console.anthropic.com", url: "https://console.anthropic.com" },
+        { n: 2, t: "Entre com sua conta Anthropic" },
+        { n: 3, t: "No menu lateral, vá em API Keys" },
+        { n: 4, t: "Crie, veja ou revogue suas chaves ali" }
+      ],
+      warnTitle: "Importante",
+      warn: "Por segurança, o Anthropic só mostra a chave completa uma vez na criação. Se você não salvou, terá que gerar uma nova.",
+      cta: "Abrir Claude Console",
+      close: "Fechar"
+    }
+  };
+  const c = copy[lang] || copy.es;
+  return (
+    <div className="api-help-pop" role="dialog" aria-label={c.title}>
+      <div className="api-help-pop__head">
+        <div className="api-help-pop__title">
+          <KeyRound size={14} />
+          <span>{c.title}</span>
+        </div>
+        <button className="api-help-pop__close" onClick={onClose} aria-label={c.close}>
+          <X size={12} />
+        </button>
+      </div>
+      <p className="api-help-pop__lead">{c.lead}</p>
+      <ol className="api-help-pop__steps">
+        {c.steps.map((s) => (
+          <li key={s.n}>
+            <span className="api-help-pop__num">{s.n}</span>
+            <span className="api-help-pop__step-text">
+              {s.url ? (
+                <>
+                  {c.steps[0].n === s.n ? (
+                    <>
+                      Visita <a href={s.url} target="_blank" rel="noopener noreferrer">{s.url.replace("https://", "")}</a>
+                    </>
+                  ) : s.t}
+                </>
+              ) : s.t}
+            </span>
+          </li>
+        ))}
+      </ol>
+      <div className="api-help-pop__warn">
+        <AlertCircle size={13} />
+        <div>
+          <div className="api-help-pop__warn-title">{c.warnTitle}</div>
+          <div className="api-help-pop__warn-body">{c.warn}</div>
+        </div>
+      </div>
+      <a
+        className="btn btn--primary api-help-pop__cta"
+        href="https://console.anthropic.com"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <ExternalLink size={12} /> {c.cta}
+      </a>
     </div>
   );
 }
@@ -5836,48 +6491,370 @@ function ErroresModule({ level }) {
 
 function CierreModule() {
   const { lang } = useT();
-  const tag = {
-    es: "ACHIEVEMENT UNLOCKED",
-    en: "ACHIEVEMENT UNLOCKED",
-    pt: "CONQUISTA DESBLOQUEADA"
-  }[lang];
-  const title = {
-    es: "Lo lograste",
-    en: "You did it",
-    pt: "Você conseguiu"
-  }[lang];
-  const subtitle = {
-    es: "Ya tienes los fundamentos para construir agentes en Claude. Lo demás es práctica.",
-    en: "You now have the fundamentals to build agents in Claude. The rest is practice.",
-    pt: "Agora você tem os fundamentos para construir agentes no Claude. O resto é prática."
-  }[lang];
+  const c = CIERRE_COPY[lang] || CIERRE_COPY.es;
+
+  const stats = [
+    { Icon: Layers,        value: "10",   label: c.statsLabels[0], tone: "lila" },
+    { Icon: BookOpenCheck, value: "30",   label: c.statsLabels[1], tone: "cyan" },
+    { Icon: CheckCircle2,  value: "100%", label: c.statsLabels[2], tone: "green" },
+    { Icon: Sparkles,      value: c.statsBuilder, label: c.statsLabels[3], tone: "lila" }
+  ];
+
+  function shareAchievement() {
+    const text = c.shareText;
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    if (typeof navigator !== "undefined" && navigator.share) {
+      navigator.share({ title: c.title, text, url }).catch(() => {});
+    } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(`${text} ${url}`.trim());
+    }
+  }
+
+  function scrollToTop() {
+    const main = document.querySelector(".main__scroll");
+    if (main) main.scrollTo({ top: 0, behavior: "smooth" });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   return (
     <div className="achievement">
       <div className="achievement__bg" aria-hidden="true" />
       <div className="achievement__inner">
+        <div className="achievement__module-pill">
+          <span>{c.modulePill}</span>
+        </div>
+
         <div className="achievement__core-wrapper">
           <AchievementCore />
         </div>
+
         <div className="achievement__tag">
           <Star size={14} strokeWidth={2.5} />
-          <span>{tag}</span>
+          <span>{c.tag}</span>
         </div>
-        <h1 className="achievement__title">{title}</h1>
-        <p className="achievement__subtitle">{subtitle}</p>
+
+        <h1 className="achievement__title">{c.title}</h1>
+        <p className="achievement__subtitle">{c.subtitle}</p>
 
         <div className="achievement__manifesto">
-          <p className="achievement__manifesto-line">
-            Los dinosaurios no se extinguieron por ser débiles, sino por no adaptarse a un cambio radical.
-          </p>
-          <p className="achievement__manifesto-line achievement__manifesto-line--em">
-            La inteligencia artificial no llegó para reemplazarte.
-          </p>
-          <p className="achievement__manifesto-line achievement__manifesto-line--em">
-            Llegó para amplificar a quienes saben adaptarse.
-          </p>
+          <p className="achievement__manifesto-line">{c.manifestoL1}</p>
+          <p className="achievement__manifesto-line achievement__manifesto-line--em">{c.manifestoL2}</p>
+          <p className="achievement__manifesto-line achievement__manifesto-line--em">{c.manifestoL3}</p>
+        </div>
+
+        <div className="ach-stats__label">{c.completedHeading}</div>
+        <div className="ach-stats">
+          {stats.map((s) => (
+            <div className={`ach-stat ach-stat--${s.tone}`} key={s.label}>
+              <div className="ach-stat__icon"><s.Icon size={20} strokeWidth={1.75} /></div>
+              <div className="ach-stat__text">
+                <div className="ach-stat__value">{s.value}</div>
+                <div className="ach-stat__label">{s.label}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="ach-ctas">
+          <button className="ach-cta ach-cta--primary" onClick={scrollToTop}>
+            <Rocket size={18} />
+            <div>
+              <div className="ach-cta__title">{c.ctaContinueTitle}</div>
+              <div className="ach-cta__sub">{c.ctaContinueSub}</div>
+            </div>
+          </button>
+          <button className="ach-cta ach-cta--secondary" onClick={shareAchievement}>
+            <Share2 size={18} />
+            <div>
+              <div className="ach-cta__title">{c.ctaShareTitle}</div>
+              <div className="ach-cta__sub">{c.ctaShareSub}</div>
+            </div>
+          </button>
+        </div>
+
+        <div className="ach-resources">
+          <div className="ach-resources__head">
+            <div className="ach-resources__kicker">{c.resourcesKicker}</div>
+            <h2 className="ach-resources__title">{c.resourcesTitle}</h2>
+            <p className="ach-resources__lead">{c.resourcesLead}</p>
+          </div>
+
+          {RESOURCES_GROUPS.map((group) => (
+            <div className="ach-res-group" key={group.id}>
+              <div className="ach-res-group__head">
+                <group.Icon size={14} />
+                <span>{c.groupLabels[group.id]}</span>
+              </div>
+              <div className="ach-res-grid">
+                {group.items.map((r) => (
+                  <a
+                    key={r.url}
+                    className="ach-res-card"
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <div className="ach-res-card__head">
+                      <div className="ach-res-card__icon"><r.Icon size={16} /></div>
+                      <ArrowUpRight size={14} className="ach-res-card__arrow" />
+                    </div>
+                    <div className="ach-res-card__title">{r.title[lang] || r.title.es}</div>
+                    <div className="ach-res-card__desc">{r.desc[lang] || r.desc.es}</div>
+                    <div className="ach-res-card__url">{r.url.replace(/^https?:\/\//, "").replace(/\/$/, "")}</div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 }
+
+const CIERRE_COPY = {
+  es: {
+    modulePill: "MÓDULO 10",
+    tag: "LOGRO DESBLOQUEADO",
+    title: "Lo lograste",
+    subtitle: "Ya tienes los fundamentos para construir agentes en Claude. Lo demás es práctica.",
+    manifestoL1: "Los dinosaurios no se extinguieron por ser débiles, sino por no adaptarse a un cambio radical.",
+    manifestoL2: "La inteligencia artificial no llegó para reemplazarte.",
+    manifestoL3: "Llegó para amplificar a quienes saben adaptarse.",
+    completedHeading: "HAS COMPLETADO",
+    statsLabels: ["Módulos completados", "Lecciones dominadas", "Progreso alcanzado", "constructor de agentes"],
+    statsBuilder: "Nuevo",
+    ctaContinueTitle: "Continuar al siguiente nivel",
+    ctaContinueSub: "Explora rutas avanzadas y especializaciones",
+    ctaShareTitle: "Compartir logro",
+    ctaShareSub: "Inspira a otros",
+    shareText: "Acabo de completar la Academia de Agentes con Claude. Lo lograste.",
+    resourcesKicker: "RECURSOS PROFESIONALES",
+    resourcesTitle: "Tu siguiente paso, curado",
+    resourcesLead: "Documentación oficial, cursos avanzados y código real para llevar tus agentes a producción.",
+    groupLabels: {
+      learn: "Aprender más",
+      build: "Construir con Claude",
+      deepen: "Profundizar"
+    }
+  },
+  en: {
+    modulePill: "MODULE 10",
+    tag: "ACHIEVEMENT UNLOCKED",
+    title: "You did it",
+    subtitle: "You now have the fundamentals to build agents in Claude. The rest is practice.",
+    manifestoL1: "Dinosaurs did not go extinct for being weak, but for failing to adapt to a radical change.",
+    manifestoL2: "Artificial intelligence did not arrive to replace you.",
+    manifestoL3: "It arrived to amplify those who know how to adapt.",
+    completedHeading: "YOU'VE COMPLETED",
+    statsLabels: ["Modules completed", "Lessons mastered", "Progress reached", "agent builder"],
+    statsBuilder: "New",
+    ctaContinueTitle: "Continue to the next level",
+    ctaContinueSub: "Explore advanced paths and specializations",
+    ctaShareTitle: "Share achievement",
+    ctaShareSub: "Inspire others",
+    shareText: "I just completed the Claude Agents Academy. You did it.",
+    resourcesKicker: "PROFESSIONAL RESOURCES",
+    resourcesTitle: "Your next step, curated",
+    resourcesLead: "Official documentation, advanced courses and real code to take your agents to production.",
+    groupLabels: {
+      learn: "Learn more",
+      build: "Build with Claude",
+      deepen: "Go deeper"
+    }
+  },
+  pt: {
+    modulePill: "MÓDULO 10",
+    tag: "CONQUISTA DESBLOQUEADA",
+    title: "Você conseguiu",
+    subtitle: "Agora você tem os fundamentos para construir agentes no Claude. O resto é prática.",
+    manifestoL1: "Os dinossauros não foram extintos por serem fracos, mas por não se adaptarem a uma mudança radical.",
+    manifestoL2: "A inteligência artificial não chegou para te substituir.",
+    manifestoL3: "Chegou para amplificar quem sabe se adaptar.",
+    completedHeading: "VOCÊ COMPLETOU",
+    statsLabels: ["Módulos completados", "Lições dominadas", "Progresso alcançado", "construtor de agentes"],
+    statsBuilder: "Novo",
+    ctaContinueTitle: "Continuar para o próximo nível",
+    ctaContinueSub: "Explore rotas avançadas e especializações",
+    ctaShareTitle: "Compartilhar conquista",
+    ctaShareSub: "Inspire outros",
+    shareText: "Acabei de completar a Academia de Agentes com Claude. Você conseguiu.",
+    resourcesKicker: "RECURSOS PROFISSIONAIS",
+    resourcesTitle: "Seu próximo passo, curado",
+    resourcesLead: "Documentação oficial, cursos avançados e código real para levar seus agentes à produção.",
+    groupLabels: {
+      learn: "Aprender mais",
+      build: "Construir com Claude",
+      deepen: "Aprofundar"
+    }
+  }
+};
+
+const RESOURCES_GROUPS = [
+  {
+    id: "learn",
+    Icon: GraduationCap,
+    items: [
+      {
+        url: "https://claude.com/resources/courses",
+        Icon: BookOpen,
+        title: { es: "Claude Courses", en: "Claude Courses", pt: "Cursos Claude" },
+        desc: {
+          es: "Cursos guiados desde fundamentos hasta agentes avanzados.",
+          en: "Guided courses from fundamentals to advanced agents.",
+          pt: "Cursos guiados de fundamentos a agentes avançados."
+        }
+      },
+      {
+        url: "https://anthropic.skilljar.com/",
+        Icon: GraduationCap,
+        title: { es: "Anthropic Academy", en: "Anthropic Academy", pt: "Anthropic Academy" },
+        desc: {
+          es: "Plataforma oficial de aprendizaje con tracks por rol.",
+          en: "Official learning platform with role-based tracks.",
+          pt: "Plataforma oficial de aprendizado com trilhas por papel."
+        }
+      },
+      {
+        url: "https://www.anthropic.com/learn",
+        Icon: Library,
+        title: { es: "Anthropic Learn", en: "Anthropic Learn", pt: "Anthropic Learn" },
+        desc: {
+          es: "Recursos curados de aprendizaje sobre IA segura y útil.",
+          en: "Curated learning resources on safe, useful AI.",
+          pt: "Recursos curados de aprendizado sobre IA segura e útil."
+        }
+      },
+      {
+        url: "https://claude.ai",
+        Icon: Sparkles,
+        title: { es: "Claude AI", en: "Claude AI", pt: "Claude AI" },
+        desc: {
+          es: "Producto principal donde construyes y usas tus agentes.",
+          en: "The main product where you build and use your agents.",
+          pt: "O produto principal onde você constrói e usa seus agentes."
+        }
+      }
+    ]
+  },
+  {
+    id: "build",
+    Icon: Wrench,
+    items: [
+      {
+        url: "https://platform.claude.com/docs/en/intro",
+        Icon: FileText,
+        title: { es: "Claude API Docs", en: "Claude API Docs", pt: "Docs da API Claude" },
+        desc: {
+          es: "Referencia técnica completa para integrar Claude en tu producto.",
+          en: "Full technical reference to integrate Claude into your product.",
+          pt: "Referência técnica completa para integrar Claude no seu produto."
+        }
+      },
+      {
+        url: "https://code.claude.com/docs/es/quickstart",
+        Icon: Code2,
+        title: { es: "Claude Code Docs", en: "Claude Code Docs", pt: "Docs do Claude Code" },
+        desc: {
+          es: "Quickstart oficial de Claude Code para coding agéntico.",
+          en: "Official Claude Code quickstart for agentic coding.",
+          pt: "Quickstart oficial do Claude Code para coding agêntico."
+        }
+      },
+      {
+        url: "https://claude.com/product/claude-code",
+        Icon: Rocket,
+        title: { es: "Claude Code", en: "Claude Code", pt: "Claude Code" },
+        desc: {
+          es: "Herramienta de desarrollo agéntico desde la terminal.",
+          en: "Agentic development tool from the terminal.",
+          pt: "Ferramenta de desenvolvimento agêntico no terminal."
+        }
+      },
+      {
+        url: "https://modelcontextprotocol.io/docs/getting-started/intro",
+        Icon: Network,
+        title: { es: "Model Context Protocol", en: "Model Context Protocol", pt: "Model Context Protocol" },
+        desc: {
+          es: "Estándar abierto para conectar agentes a herramientas y datos.",
+          en: "Open standard to connect agents with tools and data.",
+          pt: "Padrão aberto para conectar agentes a ferramentas e dados."
+        }
+      }
+    ]
+  },
+  {
+    id: "deepen",
+    Icon: Microscope,
+    items: [
+      {
+        url: "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills",
+        Icon: Brain,
+        title: {
+          es: "Engineering at Anthropic",
+          en: "Engineering at Anthropic",
+          pt: "Engineering at Anthropic"
+        },
+        desc: {
+          es: "Cómo equipar agentes para el mundo real con Agent Skills.",
+          en: "How to equip agents for the real world with Agent Skills.",
+          pt: "Como equipar agentes para o mundo real com Agent Skills."
+        }
+      },
+      {
+        url: "https://github.com/anthropics/claude-cookbooks/tree/main/skills",
+        Icon: Github,
+        title: { es: "Claude Cookbooks", en: "Claude Cookbooks", pt: "Claude Cookbooks" },
+        desc: {
+          es: "Repositorio oficial con recetas y skills listas para usar.",
+          en: "Official repo with ready-to-use recipes and skills.",
+          pt: "Repositório oficial com receitas e skills prontas para usar."
+        }
+      },
+      {
+        url: "https://github.com/anthropics/skills",
+        Icon: Github,
+        title: { es: "Anthropic / skills", en: "Anthropic / skills", pt: "Anthropic / skills" },
+        desc: {
+          es: "Skills oficiales de Anthropic en código abierto.",
+          en: "Official Anthropic skills in open source.",
+          pt: "Skills oficiais da Anthropic em código aberto."
+        }
+      },
+      {
+        url: "https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf",
+        Icon: BookMarked,
+        title: {
+          es: "Guía completa de Skills",
+          en: "Complete Guide to Skills",
+          pt: "Guia completo de Skills"
+        },
+        desc: {
+          es: "PDF oficial: la guía completa para construir Skills para Claude.",
+          en: "Official PDF: complete guide to building Skills for Claude.",
+          pt: "PDF oficial: guia completo para construir Skills para Claude."
+        }
+      },
+      {
+        url: "https://agentskills.io/home",
+        Icon: Boxes,
+        title: { es: "Agent Skills", en: "Agent Skills", pt: "Agent Skills" },
+        desc: {
+          es: "Comunidad y catálogo de skills creados por desarrolladores.",
+          en: "Community and catalog of skills built by developers.",
+          pt: "Comunidade e catálogo de skills construídos por desenvolvedores."
+        }
+      },
+      {
+        url: "https://github.com/agentskills/agentskills",
+        Icon: Github,
+        title: { es: "GitHub Agent Skills", en: "GitHub Agent Skills", pt: "GitHub Agent Skills" },
+        desc: {
+          es: "Repositorio de skills de la comunidad agentskills.",
+          en: "Community agentskills repo on GitHub.",
+          pt: "Repositório de skills da comunidade agentskills no GitHub."
+        }
+      }
+    ]
+  }
+];
